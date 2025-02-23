@@ -1,0 +1,46 @@
+{
+  "name": "online-code-compiler",
+  "version": "1.0.0",
+  "description": "An online code compiler that supports multi language code compilations",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon ./dist/app.js",
+    "start": "ts-node ./dist/app.js",
+    "prod": "npm run build && npm run start && sls deploy --stage prod",
+    "offline": "npm run build && sls offline"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.js",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm start",
+    "ext": "ts"
+  },
+  "author": "Tabbu Sehgal",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.1",
+    "node-fetch": "^2.7.0",
+    "serverless-http": "^3.2.0",
+    "serverless-plugin-typescript": "^2.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "@types/node-fetch": "^2.6.11",
+    "nodemon": "^3.1.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-offline": "^13.5.0",
+    "serverless-plugin-typescript-express": "^1.0.8"
+  }
+}

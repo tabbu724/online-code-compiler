@@ -1,0 +1,38 @@
+service: aws-node-express-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  architecture: arm64
+  # stage: 
+
+functions:
+  app:
+    handler: ./dist/app.handler
+    memorySize: 512
+    timeout: 15
+    events:
+      - http:
+          method: "post"
+          path: /executeCode
+          cors: true
+      - http:
+          method: "get"
+          path: /getLangs
+          cors: true
+      - http:
+          method: "post"
+          path: /addLangs
+          cors: true
+      - http:
+          method: "put"
+          path: /updateLang
+          cors: true
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+custom:
+  dotenv:
+    path: .env

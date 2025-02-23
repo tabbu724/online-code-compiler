@@ -1,0 +1,39 @@
+service: online-code-compiler-frontend
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+frameworkVersion: "3"
+
+custom:
+  s3Bucket: "code-compiler-frontend"
+
+
+# you can add CloudFormation resource templates here
+resources:
+  Resources:
+    AngularAppBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.s3Bucket}
+        PublicAccessBlockConfiguration:
+          BlockPublicPolicy: false
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+    AngularAppBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref AngularAppBucket
+        PolicyDocument:
+          Statement:
+            - Action: "s3:GetObject"
+              Effect: "Allow"
+              Resource: "arn:aws:s3:::${self:custom.s3Bucket}/*"
+              Principal: "*"
+Outputs:
+  BucketName:
+    Value: !Ref AngularAppBucket
+    Export:
+      Name: AngularAppBucketName
